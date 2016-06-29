@@ -1,11 +1,29 @@
-var Writer = require('./js/Writer');
-var writer = new Writer();
+'use strict'
 
-var string = 'This is a test which will be converted into audio.';
-var outputArray = string.split('');
+let program = require('commander');
+let packageJSON = require('./package.json');
+let Writer = require('./js/Writer');
+let Reader = require('./js/Reader');
 
-outputArray = outputArray.map((letter) => {
-    return letter.charCodeAt(0);
-});
+program
+    .version(packageJSON.version)
+    .option('-w, --write', 'Writes to tape')
+    .option('-r, --read', 'Reads from tape')
+    .parse(process.argv);
 
-writer.writeData(outputArray);
+if (program.write) {
+    let writer = new Writer();
+    
+    let string = 'This is a test which will be converted into audio.';
+    let outputArray = string.split('');
+
+    outputArray = outputArray.map((letter) => {
+        return letter.charCodeAt(0);
+    });
+
+    writer.writeData(outputArray);
+}
+
+if (program.read) {
+    let reader = new Reader();
+}

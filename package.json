@@ -16,5 +16,8 @@
     "commodore"
   ],
   "author": "Jordan Lord",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
