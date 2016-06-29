@@ -1,7 +1,9 @@
+'use strict'
+
 /*
  * Writes data to the tape.
  */
-class Write {
+class Writer {
     constructor() {
         var spawn = require('child_process').spawn;
         
@@ -78,4 +80,4 @@ class Write {
     }
 }
 
-module.exports = Write;
+module.exports = Writer;
