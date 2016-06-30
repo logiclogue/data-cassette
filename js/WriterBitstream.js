@@ -21,6 +21,7 @@ class WriterBitsteam extends Writer {
      */
     outputAudio() {
         this.program.write(new Buffer(this.output));
+        process.exit(1);
     }
 }
 
