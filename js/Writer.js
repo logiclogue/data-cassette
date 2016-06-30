@@ -15,8 +15,8 @@ class Writer {
         this.output = [];
         this.cycle = 1 / this.sampleRate;
         this.bitFrequencies = [600, 900];
-        this.startBit = this.bitFrequencies[1];
-        this.stopBit = this.bitFrequencies[0];
+        this.startBit = this.bitFrequencies[0];
+        this.stopBit = this.bitFrequencies[1];
     }
 
 
@@ -26,8 +26,8 @@ class Writer {
      */
     writeData(byteArray) {
         // Lead in tone.
-        for (let i = 0; i < 500; i += 1) {
-            this.writeWave(this.bitFrequencies[0]);
+        for (let i = 0; i < 4; i += 1) {
+            this.writeWave(this.stopBit);
         }
 
         // Writes each byte.
@@ -36,7 +36,9 @@ class Writer {
         });
 
         // Writes stop bit.
-        this.writeWave(this.stopBit);
+        for (let i = 0; i < 4; i += 1) {
+            this.writeWave(this.stopBit);
+        }
 
         // Output
         this.outputAudio();
@@ -56,12 +58,14 @@ class Writer {
     writeByte(data) {
         this.writeWave(this.startBit);
 
-        for (let i = 0; i < 7; i += 1) {
+        for (let i = 7; i >= 0; i -= 1) {
             if (data & 1 << i) {
-                this.writeWave(this.bitFrequencies[0]);
+                this.writeWave(this.bitFrequencies[1]);
+                console.log(1);
             }
             else {
-                this.writeWave(this.bitFrequencies[1]);
+                this.writeWave(this.bitFrequencies[0]);
+                console.log(0);
             }
         }
     }
@@ -76,6 +80,7 @@ class Writer {
             let output = Math.sin(i * 2 * Math.PI * frequency);
 
             output *= 128;
+            output += 128;
             output = Math.floor(output);
 
             this.output.push(output);
