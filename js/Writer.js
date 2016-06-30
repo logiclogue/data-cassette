@@ -26,7 +26,7 @@ class Writer {
      */
     writeData(byteArray) {
         // Lead in tone.
-        for (let i = 0; i < 4; i += 1) {
+        for (let i = 0; i < 500; i += 1) {
             this.writeWave(this.stopBit);
         }
 
@@ -61,11 +61,9 @@ class Writer {
         for (let i = 7; i >= 0; i -= 1) {
             if (data & 1 << i) {
                 this.writeWave(this.bitFrequencies[1]);
-                console.log(1);
             }
             else {
                 this.writeWave(this.bitFrequencies[0]);
-                console.log(0);
             }
         }
     }
