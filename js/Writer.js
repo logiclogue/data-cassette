@@ -10,8 +10,7 @@ class Writer {
         this.sampleRate = 44100;
 
         this.aplay = spawn('aplay', ['-r', this.sampleRate]);
-        //this.program = this.aplay.stdin;
-        this.program = process.stdout;
+        this.program = this.aplay.stdin;
 
         this.output = [];
         this.cycle = 1 / this.sampleRate;
