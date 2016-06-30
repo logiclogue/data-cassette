@@ -42,6 +42,9 @@ class Writer {
         this.outputAudio();
     }
 
+    /*
+     * Outputs audio to selected output.
+     */
     outputAudio() {
         this.program.write(new Buffer(this.output));
         this.program.end();
