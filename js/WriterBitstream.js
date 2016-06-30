@@ -23,3 +23,5 @@ class WriterBitsteam extends Writer {
         this.program.write(new Buffer(this.output));
     }
 }
+
+module.exports = WriterBitsteam;
