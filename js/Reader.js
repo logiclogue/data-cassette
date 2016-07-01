@@ -21,7 +21,7 @@ class Reader {
 
 
     _readAudio(data) {
-        this.stream.push(...data);
+        this.stream.push(this.stream, data);
         
         let firstIndex = this.stream.length - data.length;
 
