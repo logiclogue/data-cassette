@@ -77,6 +77,7 @@ class Writer {
         for (let i = 0; i < timePeriod; i += this.cycle) {
             let output = Math.sin(i * 2 * Math.PI * frequency);
 
+            //output = output >= 0 ? Math.ceil(output) : Math.floor(output);
             output *= 128;
             output += 128;
             output = Math.floor(output);

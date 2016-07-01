@@ -88,7 +88,7 @@ class Reader {
     decodeBit(waveLength) {
         let identifier = Math.round(waveLength / 10);
 
-        if (waveLength < 40 || waveLength > 80) {
+        if (waveLength < 45 || waveLength > 77) {
             return;
         }
 
