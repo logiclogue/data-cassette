@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict'
 
 let program = require('commander');
@@ -9,6 +11,7 @@ var fs = require('fs');
 
 program
     .version(packageJSON.version)
+    .usage('[options] <file ...>')
     .option('-w, --write', 'Writes to tape')
     .option('-r, --read', 'Reads from tape')
     .option('-b, --bitsteam', 'Reads/writes to/from bitsteam')
@@ -23,11 +26,8 @@ if (program.write) {
     else {
         writer = new Writer();
     }
-    
-    let string = 'This is a test which will be converted into audio.';
-    string = 'Fig 1 shows the signal coming into A0.  The start and end of one cycle measured by timer is indicated by the image note.  Fig 2 shows the output from the serial monitor (command/ctrl+shift+m).  This technique works great for sine waves, but when wave become more complicated (and cross 2.5V more than twice in one cycle) this technique breaks down.';
 
-    fs.readFile('index.js', function (err, data) {
+    fs.readFile(program.args[0], function (err, data) {
         writer.writeData(data);
     });
 }

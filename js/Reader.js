@@ -24,6 +24,9 @@ class Reader {
     }
 
 
+    /*
+     * Method that receives audio...
+     */
     _readAudio(data) {
         this.stream.push.apply(this.stream, data);
         
@@ -57,7 +60,7 @@ class Reader {
         }
 
         if (readByte) {
-            process.stdout.write(String.fromCharCode(this.convertByteArrayToNumber(this.currentByte)));
+            process.stdout.write(new Buffer([this.convertByteArrayToNumber(this.currentByte)]));
         }
 
         // If read byte and stop bit.
