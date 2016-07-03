@@ -28,7 +28,7 @@ class Reader {
         data.forEach((level, index) => {
             index += firstIndex;
 
-            if (level < 127 && this.stream[index + 1] >= 127) {
+            if (this.stream[index - 1] < 127 && level >= 127) {
                 let bit = this.decodeBit(index - this.last);
 
                 if (bit === 0 || bit === 1) {
