@@ -1,5 +1,7 @@
 'use strict'
 
+var config = require('../config.json');
+
 /*
  * Writes data to the tape.
  */
@@ -7,14 +9,14 @@ class Writer {
     constructor() {
         let spawn = require('child_process').spawn;
         
-        this.sampleRate = 44100;
+        this.sampleRate = config.sampleRate;
 
         this.aplay = spawn('aplay', ['-r', this.sampleRate]);
         this.program = this.aplay.stdin;
 
         this.output = [];
         this.cycle = 1 / this.sampleRate;
-        this.bitFrequencies = [600, 900];
+        this.bitFrequencies = config.frequencies;
         this.startBit = this.bitFrequencies[0];
         this.stopBit = this.bitFrequencies[1];
     }

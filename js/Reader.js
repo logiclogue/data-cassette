@@ -1,6 +1,7 @@
 'use strict'
 
 let spawn = require('child_process').spawn;
+let config = require('../config.json');
 
 
 /*
@@ -15,6 +16,9 @@ class Reader {
         this.leadCount = 0;
         this.reading = false;
         this.currentByte = [];
+        this.wavelengths = config.frequencies.map((num) => {
+            return config.sampleRate / num;
+        });
 
         this.input.on('data', this._readAudio.bind(this));
     }
@@ -85,17 +89,11 @@ class Reader {
         }
     }
 
-    decodeBit(waveLength) {
-        let identifier = Math.round(waveLength / 10);
-
-        if (waveLength < 45 || waveLength > 77) {
-            return;
-        }
-
-        if (Math.abs(50 - waveLength) < Math.abs(72 - waveLength)) {
+    decodeBit(wavelength) {
+        if (Math.abs(this.wavelengths[1] - wavelength) < Math.abs(this.wavelengths[0] - wavelength)) {
             return 1;
         }
-        else if (Math.abs(72 - waveLength) < Math.abs(50 - waveLength)) {
+        else if (Math.abs(this.wavelengths[0] - wavelength) < Math.abs(this.wavelengths[1] - wavelength)) {
             return 0;
         }
     }
