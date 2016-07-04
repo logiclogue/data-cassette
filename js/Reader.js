@@ -25,7 +25,7 @@ class Reader {
 
 
     /*
-     * Method that receives audio...
+     * Method that receives audio from stdin and reads each byte.
      */
     _readAudio(data) {
         this.stream.push.apply(this.stream, data);
@@ -49,6 +49,9 @@ class Reader {
         });
     }
 
+    /*
+     * Deals with each bit.
+     */
     detect(bit) {
         let readByte = this.currentByte.length === 8;
 
@@ -82,6 +85,9 @@ class Reader {
         this.decodeByte(bit);
     }
 
+    /*
+     * Detects whether the whole byte has been read.
+     */
     decodeByte(bit) {
         if (this.currentByte.length === 8) {
             return true;
@@ -92,6 +98,9 @@ class Reader {
         }
     }
 
+    /*
+     * Finds which bit the detected wave is.
+     */
     decodeBit(wavelength) {
         if (Math.abs(this.wavelengths[1] - wavelength) < Math.abs(this.wavelengths[0] - wavelength)) {
             return 1;
@@ -101,6 +110,9 @@ class Reader {
         }
     }
 
+    /*
+     * Detects whether the lead tone has been found.
+     */
     detectLeadTone(bit) {
         if (this.leadCount >= 50 && bit === 0) {
             this.reading = true;
@@ -120,6 +132,9 @@ class Reader {
         return false;
     }
 
+    /*
+     * Converts the current byte array into a number.
+     */
     convertByteArrayToNumber(byteArray) {
         let number = 0;
 
