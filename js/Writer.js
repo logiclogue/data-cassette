@@ -61,6 +61,7 @@ class Writer {
         this.writeWave(this.startBit);
 
         for (let i = 7; i >= 0; i -= 1) {
+            // (data >> i) & 1
             if (data & 1 << i) {
                 this.writeWave(this.bitFrequencies[1]);
             }
