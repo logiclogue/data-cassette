@@ -10,7 +10,6 @@ let config = require('../config.json');
 class Reader {
     constructor() {
         this.input = process.stdin;
-        this.bits = [];
         this.last = 0;
         this.stream = [];
         this.leadCount = 0;
@@ -38,11 +37,7 @@ class Reader {
             if (this.stream[index - 1] < 127 && level >= 127) {
                 let bit = this.decodeBit(index - this.last);
 
-                if (bit === 0 || bit === 1) {
-                    this.detect(bit);
-                }
-
-                this.bits.push(bit);
+                this.detect(bit);
 
                 this.last = index;
             }
@@ -93,21 +88,24 @@ class Reader {
             return true;
         }
 
-        if (bit === 0 || bit === 1) {
-            this.currentByte.push(bit);
-        }
+        this.currentByte.push(bit);
     }
 
     /*
      * Finds which bit the detected wave is.
      */
     decodeBit(wavelength) {
-        if (Math.abs(this.wavelengths[1] - wavelength) < Math.abs(this.wavelengths[0] - wavelength)) {
-            return 1;
-        }
-        else if (Math.abs(this.wavelengths[0] - wavelength) < Math.abs(this.wavelengths[1] - wavelength)) {
-            return 0;
-        }
+        let current = this.wavelengths[0];
+        let bit = 0;
+
+        this.wavelengths.forEach((val, index) => {
+            if (Math.abs(wavelength - val) < Math.abs(wavelength - current)) {
+                current = val;
+                bit = index;
+            }
+        });
+
+        return bit;
     }
 
     /*
@@ -135,12 +133,14 @@ class Reader {
     /*
      * Converts the current byte array into a number.
      */
-    convertByteArrayToNumber(byteArray) {
+    convertByteArrayToNumber(byteArray, base) {
+        base = base || 2;
+
         let number = 0;
 
         byteArray.forEach((bit, index) => {
             if (bit === 1) {
-                number += Math.pow(2, 7 - index);
+                number += Math.pow(base, 7 - index);
             }
         });
 

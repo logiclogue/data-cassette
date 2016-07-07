@@ -7,7 +7,7 @@ let packageJSON = require('./package.json');
 let Writer = require('./js/Writer');
 let WriterBitsteam = require('./js/WriterBitstream');
 let Reader = require('./js/Reader');
-var fs = require('fs');
+let fs = require('fs');
 
 program
     .version(packageJSON.version)
