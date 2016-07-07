@@ -1,6 +1,7 @@
 'use strict'
 
-var config = require('../config.json');
+let config = require('../config.json');
+let BaseConverter = require('./BaseConverter');
 
 /*
  * Writes data to the tape.
@@ -19,6 +20,8 @@ class Writer {
         this.bitFrequencies = config.frequencies;
         this.startBit = this.bitFrequencies[0];
         this.stopBit = this.bitFrequencies[1];
+
+        this.conv = new BaseConverter(this.bitFrequencies.length);
     }
 
 
@@ -60,15 +63,11 @@ class Writer {
     writeByte(data) {
         this.writeWave(this.startBit);
 
-        for (let i = 7; i >= 0; i -= 1) {
-            // (data >> i) & 1
-            if (data & 1 << i) {
-                this.writeWave(this.bitFrequencies[1]);
-            }
-            else {
-                this.writeWave(this.bitFrequencies[0]);
-            }
-        }
+        let bitArray = this.conv.convert(data);
+
+        bitArray.forEach((bit) => {
+            this.writeWave(this.bitFrequencies[bit]);
+        });
     }
 
     /*
