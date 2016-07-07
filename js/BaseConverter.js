@@ -7,25 +7,11 @@
 class BaseConverter {
     constructor(count) {
         this.base = this._calculateBase(count);
-        this.bits = Math.log(this.base) / Math.log(2);
+        this.bits = this._log(2, this.base);
         
         // Preprocessing for convert().
         this.i = (8 / this.bits) - 1;
         this.baseMinusOne = this.base - 1;
-    }
-
-
-    /*
-     * Calculates the base from the input number.
-     */
-    _calculateBase(count) {
-        var i = count;
-
-        for (; i > 0; i -= 1) {
-            if (8 % (Math.log(i) / Math.log(2)) === 0) {
-                return i;
-            }
-        }
     }
 
 
@@ -43,6 +29,27 @@ class BaseConverter {
         }
 
         return bitArray;
+    }
+    
+
+    /*
+     * Calculates the base from the input number.
+     */
+    _calculateBase(count) {
+        var i = count;
+
+        for (; i > 0; i -= 1) {
+            if (8 % this._log(2, i) === 0) {
+                return i;
+            }
+        }
+    }
+
+    /*
+     * Calculates log to a base.
+     */
+    _log(base, num) {
+        return Math.log(num) / Math.log(base);
     }
 }
 
