@@ -2,14 +2,13 @@
 
 let config = require('../config.json');
 let BaseConverter = require('./BaseConverter');
+let spawn = require('child_process').spawn;
 
 /*
  * Writes data to the tape.
  */
 class Writer {
     constructor() {
-        let spawn = require('child_process').spawn;
-        
         this.sampleRate = config.sampleRate;
 
         this.aplay = spawn('aplay', ['-r', this.sampleRate]);

@@ -7,6 +7,7 @@ let packageJSON = require('./package.json');
 let Writer = require('./js/Writer');
 let WriterBitsteam = require('./js/WriterBitstream');
 let Reader = require('./js/Reader');
+let ReaderBitstream = require('./js/ReaderBitstream');
 let fs = require('fs');
 
 program
@@ -14,13 +15,13 @@ program
     .usage('[options] <file ...>')
     .option('-w, --write', 'Writes to tape')
     .option('-r, --read', 'Reads from tape')
-    .option('-b, --bitsteam', 'Reads/writes to/from bitsteam')
+    .option('-b, --bitstream', 'Reads/writes to/from bitsteam')
     .parse(process.argv);
 
 if (program.write) {
     let writer;
 
-    if (program.bitsteam) {
+    if (program.bitstream) {
         writer = new WriterBitsteam();
     }
     else {
@@ -33,5 +34,14 @@ if (program.write) {
 }
 
 if (program.read) {
-    let reader = new Reader();
+    let reader;
+
+    if (program.bitstream) {
+        reader = new ReaderBitstream();
+    }
+    else {
+        reader = new Reader();
+    }
+
+    reader.start();
 }

@@ -9,7 +9,11 @@ let config = require('../config.json');
  */
 class Reader {
     constructor() {
-        this.input = process.stdin;
+        this.sampleRate = config.sampleRate;
+
+        this.arecord = spawn('arecord', ['-r', this.sampleRate, '-c', 1]);
+        this.input = this.arecord.stdout;
+
         this.last = 0;
         this.stream = [];
         this.leadCount = 0;
@@ -18,7 +22,13 @@ class Reader {
         this.wavelengths = config.frequencies.map((num) => {
             return config.sampleRate / num;
         });
+    }
 
+    
+    /*
+     * Starts reading the audio and decodes it.
+     */
+    start() {
         this.input.on('data', this._readAudio.bind(this));
     }
 
