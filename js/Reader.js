@@ -51,6 +51,8 @@ class Reader {
 
                 this.last = index;
             }
+
+            delete this.stream[index - 1];
         });
     }
 
