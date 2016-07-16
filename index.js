@@ -32,8 +32,7 @@ if (program.write) {
         writer.writeData(data);
     });
 }
-
-if (program.read) {
+else if (program.read) {
     let reader;
 
     if (program.bitstream) {
@@ -45,3 +44,6 @@ if (program.read) {
 
     reader.start();
 }
+
+if (!program.read && !program.write)
+    program.help();
