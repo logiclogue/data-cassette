@@ -1,6 +1,6 @@
 {
   "name": "data-cassette",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reads and writes data to cassette tapes",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "license": "GPL-3.0",
   "dependencies": {
     "commander": "^2.9.0"
+  },
+  "bin": {
+      "data-cassette": "./index.js"
   }
 }
