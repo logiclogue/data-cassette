@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 let spawn = require('child_process').spawn;
 let config = require('../config.json');

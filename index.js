@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-'use strict'
+'use strict';
 
 let program = require('commander');
 let packageJSON = require('./package.json');

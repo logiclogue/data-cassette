@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
  * Used to convert base specifically for the
